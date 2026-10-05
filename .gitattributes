@@ -17,4 +17,5 @@ lib/client.js linguist-generated=true
 # 文档用 LF，且在 diff 里正常显示
 *.md text eol=lf
 *.yml text eol=lf
+*.yaml text eol=lf
 *.json text eol=lf

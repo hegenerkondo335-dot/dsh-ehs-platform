@@ -1,0 +1,49 @@
+name: self-check
+
+# 零依赖项目，CI 只做一件事：把 30 项自检跑一遍。
+# 这些自检覆盖领域规则（派单三要素 / 未改完不许销号 / 逾期推导）、真实 HTTP 行为、
+# 客户端产物一致性、以及"可被同源嵌套"这条容易被误改坏的约束。
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  self-check:
+    name: node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # 项目要求 Node >= 22.5（依赖 node:sqlite）。三个平台都跑，
+        # 因为"换行/路径/大小写"这类问题只在特定平台暴露。
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: ['22.x', '24.x']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: 版本信息
+        run: node --version
+
+      - name: 确认零依赖（没有 node_modules 也能跑）
+        shell: bash
+        run: |
+          if [ -d node_modules ]; then
+            echo "::error::意外的 node_modules —— 本项目零依赖"
+            exit 1
+          fi
+          echo "OK: 无 node_modules"
+
+      - name: 自检（30 项）
+        run: node tests/self-check.mjs
+
+      - name: 客户端产物与源码一致（防止改了 client-plugin 忘了构建）
+        run: node scripts/build-client.mjs --check
