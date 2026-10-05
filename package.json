@@ -1,0 +1,57 @@
+{
+  "name": "dsh-ehs-platform",
+  "version": "0.1.0",
+  "description": "EHS 管理平台：隐患台账与整改闭环（派单三要素、未改完不许销号、每次流转留痕）。基于 DSH，也可独立运行。",
+  "type": "module",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./server": "./server/app.js",
+    "./domain": "./server/domain.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "ehs-platform": "./bin/standalone.js"
+  },
+  "files": [
+    "lib",
+    "server",
+    "public",
+    "client-plugin",
+    "bin",
+    "scripts",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-sidebar-right"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "ehs",
+    "safety",
+    "hazard",
+    "隐患",
+    "闭环"
+  ],
+  "scripts": {
+    "start": "node bin/standalone.js",
+    "test": "node tests/self-check.mjs",
+    "build:client": "node scripts/build-client.mjs",
+    "check:client": "node scripts/build-client.mjs --check"
+  }
+}

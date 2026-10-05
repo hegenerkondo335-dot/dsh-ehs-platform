@@ -1,0 +1,20 @@
+# 统一换行：仓库里一律 LF，检出到 Windows 时由 git 决定（避免 CRLF 混进 diff）
+* text=auto eol=lf
+
+# 二进制资源明确标记，防止被当文本处理
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.db binary
+
+# 生成物：linguist 统计与 diff 折叠（lib/client.js 是构建产物，必须入库但不能主导语言统计）
+lib/client.js linguist-generated=true
+
+# 文档用 LF，且在 diff 里正常显示
+*.md text eol=lf
+*.yml text eol=lf
+*.json text eol=lf

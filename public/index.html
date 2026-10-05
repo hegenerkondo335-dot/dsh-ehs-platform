@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EHS 管理平台 · 隐患整改闭环</title>
+<meta name="description" content="把隐患排查做成闭环：派单三要素、未改完不许销号、每次流转留痕。">
+<link rel="stylesheet" href="/assets/app.css?v=1">
+<link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="skip" href="#main">跳到主内容</a>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="9" fill="#0f2a4a"/>
+        <path d="M16 7l7 3v6.5c0 4.2-3 7.1-7 8.5-4-1.4-7-4.3-7-8.5V10l7-3z" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+        <path d="M12.5 16.2l2.4 2.4 4.6-4.8" fill="none" stroke="#2dd4bf" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-text">
+        <strong>EHS 管理平台</strong>
+        <small>隐患整改闭环</small>
+      </span>
+    </div>
+    <div class="topbar-actions">
+      <span class="today" id="todayLabel"></span>
+      <button class="btn btn-primary" type="button" id="newHazardBtn">＋ 录入隐患</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <section class="stats" id="stats" aria-label="概览"></section>
+
+  <section class="toolbar">
+    <div class="tabs" id="statusTabs" role="tablist"></div>
+    <div class="filters">
+      <input class="input" type="search" id="searchInput" placeholder="搜描述 / 区域 / 责任人 / 编号">
+      <select class="input" id="levelFilter" aria-label="按级别筛选">
+        <option value="">全部级别</option>
+        <option value="major">仅重大</option>
+        <option value="general">仅一般</option>
+      </select>
+      <label class="check"><input type="checkbox" id="overdueFilter"> 只看逾期</label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="table" id="table" role="table" aria-label="隐患台账"></div>
+    <div class="empty" id="empty" hidden>
+      <div class="empty-icon" aria-hidden="true">🛡️</div>
+      <div class="empty-title">还没有隐患记录</div>
+      <p class="empty-hint">点右上角「＋ 录入隐患」开始。录入后按顺序做三件事：<strong>派单</strong>（谁、何时、改成什么样）→ 整改方<strong>提交复查</strong> → 复查人<strong>销号或退回</strong>。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>EHS 管理平台 v0.1 · 数据存在你自己的机器上</span>
+    <span class="foot-links">
+      <a href="/api/health" target="_blank" rel="noopener">健康检查</a>
+      <a href="/api/hazards" target="_blank" rel="noopener">开放接口</a>
+    </span>
+  </div>
+</footer>
+
+<!-- 详情抽屉：一条隐患的全部信息 + 可做的动作 + 流转留痕 -->
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer-mask" data-close></div>
+  <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <header class="drawer-head">
+      <div>
+        <div class="drawer-code" id="drawerCode"></div>
+        <h2 id="drawerTitle"></h2>
+      </div>
+      <button class="icon-btn" type="button" data-close aria-label="关闭">✕</button>
+    </header>
+    <div class="drawer-body" id="drawerBody"></div>
+    <footer class="drawer-foot" id="drawerFoot"></footer>
+  </aside>
+</div>
+
+<!-- 表单对话框（录入 / 派单 / 提交 / 复查 / 作废，共用一个壳） -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-mask" data-close></div>
+  <form class="modal-panel" id="modalForm">
+    <h2 id="modalTitle"></h2>
+    <div id="modalFields"></div>
+    <p class="form-error" id="modalError" hidden></p>
+    <div class="modal-actions">
+      <button class="btn" type="button" data-close>取消</button>
+      <button class="btn btn-primary" type="submit" id="modalSubmit">确定</button>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script src="/assets/app.js?v=1" defer></script>
+</body>
+</html>

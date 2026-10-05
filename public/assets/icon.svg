@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="EHS 管理平台">
+  <rect width="32" height="32" rx="9" fill="#0f2a4a"/>
+  <path d="M16 6.5l7.5 3.2v6.9c0 4.5-3.2 7.6-7.5 9.1-4.3-1.5-7.5-4.6-7.5-9.1V9.7l7.5-3.2z" fill="none" stroke="#2dd4bf" stroke-width="2.2"/>
+  <path d="M12.4 16.3l2.6 2.6 5-5.2" fill="none" stroke="#2dd4bf" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

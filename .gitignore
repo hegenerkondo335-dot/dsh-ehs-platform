@@ -1,0 +1,40 @@
+# ---------- 运行时数据（绝不入库）----------
+# SQLite 主库与 WAL/SHM 边车文件。数据是可移植的单个文件，
+# 备份 = 拷走 ehs.db；对外导出 = GET /api/hazards。
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# 就地数据目录（--data ./data 时会落在这里）
+/data/
+/uploads/
+
+# ---------- 依赖与构建产物 ----------
+node_modules/
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# 本项目零依赖、零构建，上面几条只是防止以后有人误装误提交。
+# 注意：lib/client.js 是【生成物但必须入库】—— 宿主直接加载它，
+# 开源用户装完不必先构建。改完 client-plugin/index.mjs 要跑
+#   node scripts/build-client.mjs
+# 自检会比对两者是否一致（tests/self-check.mjs 的最后两项）。
+
+# ---------- 编辑器与系统 ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ---------- 日志与临时文件 ----------
+*.log
+*.tmp
+*.bak

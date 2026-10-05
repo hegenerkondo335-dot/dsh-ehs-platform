@@ -1,0 +1,29 @@
+# ============================================================================
+# dsh-ehs-platform —— DSH bundle patch（挂载声明）
+# ============================================================================
+# 把「EHS 管理平台」插进某个 profile 的配置树。两种挂载方式等价：
+#
+#   a) 由 profile 的 `dsh.profile.bundles` 加载（推荐）：
+#        dsh plugin --profile web add link:<本目录绝对路径>
+#   b) 手改 profile 的 cordis.patch.yml，insert 下面这一行
+#
+# 两种方式都要求 `name` 能在 profile 的 node_modules 里解析到本包（本地开发用 link:）。
+#
+# 行 id 就是 patch 的定位键，同一行承载本插件的 config。默认值刻意保守：
+# 只挂路由、不起额外端口、不往宿主界面注入任何东西（入口只有右侧栏标签）。
+#
+# 常用配置：
+#   basePath: '/ehs-platform'   平台页面的 URL 前缀（绝对路径、不以 / 结尾）。
+#                               被公司工作台 iframe 嵌套时，工作台读的就是这个路径。
+#   dataDir: null               数据目录；null = $DSH_HOME/ehs-platform（SQLite 单文件）
+#
+# 示例——把平台挂到 /ehs-platform 并让工作台嵌它：
+#
+#   - id: dsh-ehs-platform
+#     name: 'dsh-ehs-platform'
+#     config:
+#       basePath: '/ehs-platform'
+
+- insert:
+    - id: dsh-ehs-platform
+      name: 'dsh-ehs-platform'
