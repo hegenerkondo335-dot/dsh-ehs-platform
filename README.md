@@ -134,3 +134,4 @@ ehs-platform-plugin/
 ## 许可
 
 MIT，见 [LICENSE](LICENSE)。
+<!-- dsh-superagent smoke -->
